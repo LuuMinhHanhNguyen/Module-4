@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class ExchangeController {
     @Autowired
-    IExchangeMoneyService iExchangeMoneyService;
+    private IExchangeMoneyService iExchangeMoneyService;
     @GetMapping("/exchange")
     public String exchangeMoney(){
         return "index";
