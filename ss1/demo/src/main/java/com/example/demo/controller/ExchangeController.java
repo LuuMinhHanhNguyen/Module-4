@@ -29,7 +29,7 @@ public class ExchangeController {
         } else {
             model.addAttribute("result", iExchangeMoneyService.exchangeMoney(amount, rate));
         }
-
+        // updated
         return "index";
     }
 }
