@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -15,8 +16,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.example")
-public class AppConfigurations implements WebMvcConfigurer, ApplicationContextAware {
+@ComponentScan("com.example.demo")
+public class AppConfiguration implements WebMvcConfigurer,  ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
@@ -25,15 +26,14 @@ public class AppConfigurations implements WebMvcConfigurer, ApplicationContextAw
         this.applicationContext = applicationContext;
     }
 
-    // Cấu hình Thymeleaf
-
+    //Cấu hình Thymleaf
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setPrefix("/WEB-INF/views/");
         templateResolver.setSuffix(".html");
+        templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
     }
