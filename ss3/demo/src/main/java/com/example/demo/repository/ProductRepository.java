@@ -54,5 +54,15 @@ public class ProductRepository implements IProductRepository{
         return searchedProducts;
     }
 
+    @Override
+    public boolean checkExistence(int productId) {
+        for (int i = 0; i < products.size(); i++) {
+            if(products.get(i).getId() == productId){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }

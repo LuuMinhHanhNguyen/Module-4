@@ -16,4 +16,5 @@ public interface IProductRepository {
     void editProduct(Product product);
 
     List<Product> searchByName(String productName);
+    boolean checkExistence(int productId);
 }

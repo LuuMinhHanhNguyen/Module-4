@@ -47,6 +47,7 @@ public class ProductController {
             model.addAttribute("product", iProductService.getProductById(id));
             return "details";
         } else {
+            System.out.println("hihii");
             return "redirect:/products";
         }
     }
@@ -57,6 +58,7 @@ public class ProductController {
             model.addAttribute("product", iProductService.getProductById(id));
             return "update";
         } else {
+            System.out.println("hihii");
             return "redirect:/products";
         }
     }
