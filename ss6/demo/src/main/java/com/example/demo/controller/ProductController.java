@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/products")
@@ -42,23 +43,23 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public String showProductDetails(@PathVariable int id, Model model) {
+    public String showProductDetails(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
         if(iProductService.checkExistence(id)){
             model.addAttribute("product", iProductService.getProductById(id));
             return "details";
         } else {
-            System.out.println("hihii");
+            redirectAttributes.addFlashAttribute("message", "Invalid ID!");
             return "redirect:/products";
         }
     }
 
     @GetMapping("/edit{id}")
-    public String showEditForm(@PathVariable int id, Model model) {
+    public String showEditForm(@PathVariable int id, Model model, RedirectAttributes redirectAttributes) {
         if(iProductService.checkExistence(id)){
             model.addAttribute("product", iProductService.getProductById(id));
             return "update";
         } else {
-            System.out.println("hihii");
+            redirectAttributes.addFlashAttribute("message", "Invalid ID!");
             return "redirect:/products";
         }
     }

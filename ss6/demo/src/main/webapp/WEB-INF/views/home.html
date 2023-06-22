@@ -22,6 +22,10 @@
 </head>
 
 <body>
+<div class="row justify-content-center">
+    <div class="col col-9 alert alert-danger alert-message text-center" role="alert" th:if="${message != null}" th:text="${message}">
+    </div>
+</div>
 <div class="container mt-5">
     <h1 class="text-center">PRODUCT MANAGEMENT</h1>
 
@@ -144,42 +148,6 @@
 </div>
 
 
-<!-- Modal update product's info-->
-<!--<div class="modal fade" id="updateToSold" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">-->
-<!--    <div class="modal-dialog">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h1 class="modal-title fs-5" id="exampleModalLabel3">Update Product Info</h1>-->
-<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--            </div>-->
-<!--            <div class="modal-body">-->
-<!--                <form action="/management?action=create" method="post">-->
-<!--                    <div class="mb-3">-->
-<!--                        <label for="name1" class="col-form-label">Product Name</label>-->
-<!--                        <input type="text" class="form-control" id="name1" name="name1" required/>-->
-<!--                    </div>-->
-<!--                    <div class="mb-3">-->
-<!--                        <label for="price1" class="col-form-label">Price</label>-->
-<!--                        <input type="number" class="form-control" id="price1" name="price1" step="0.01" required-->
-<!--                        />-->
-<!--                    </div>-->
-<!--                    <div class="mb-3">-->
-<!--                        <label for="description1" class="col-form-label">Description</label>-->
-<!--                        <input type="text" class="form-control" id="description1" name="description1" required/>-->
-<!--                    </div>-->
-<!--                    <div class="mb-3">-->
-<!--                        <label for="manufacturer1" class="col-form-label">Manufacturer</label>-->
-<!--                        <input type="text" class="form-control" id="manufacturer1" name="manufacturer1" required/>-->
-<!--                    </div>-->
-
-<!--                    <button name="no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                    <button name="yes" type="submit" class="btn btn-info" data-bs-dismiss="modal">Update</button>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
 <!-- Modal success -->
 <!--<div class="modal fade" id="modal-success" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">-->
 <!--    <div class="modal-dialog">-->
@@ -194,7 +162,6 @@
 <!--    </div>-->
 <!--</div>-->
 
-
 <!--<script th:if="${deleteMessage != null || addMessage != null || editMessage!= null}">-->
 <!--    // Get the modal element-->
 <!--    let myModal = document.querySelector("#modal-success");-->
@@ -205,7 +172,11 @@
 <!--    // Show the modal-->
 <!--    modal.show();-->
 <!--</script>-->
+<script th:if="${message != null }">
 
+    setTimeout(function (){document.querySelector(".alert-message").style.display = "none"},2000)
+
+</script>
 
 <script>
     function passIdToDelete(id, manu) {
