@@ -79,6 +79,7 @@ public class BlogController {
 
     @GetMapping("/search")
     public String searchByName(@RequestParam("title") String title, Model model) {
+        // update
         System.out.println(iBlogService.searchByTitle(title));
         model.addAttribute("blogs", iBlogService.searchByTitle(title));
         return "/home";
