@@ -37,41 +37,9 @@ public class BlogService implements IBlogService {
         iProductRepository.deleteById(id);
     }
 
+    @Override
+    public List<Blog> searchByTitle(String title) {
+        return iProductRepository.findByTitleContaining(title);
+    }
 
-
-
-//    @Override
-//    public List<Product> getAll() {
-//        return iProductRepository.getAll();
-//    }
-//
-//    @Override
-//    public void createProduct(Product product) {
-//        iProductRepository.createProduct(product);
-//    }
-//
-//    @Override
-//    public void deleteProduct(int productId) {
-//        iProductRepository.deleteProduct(productId);
-//    }
-//
-//    @Override
-//    public Product getProductById(int productId) {
-//        return iProductRepository.getProductById(productId);
-//    }
-//
-//    @Override
-//    public void editProduct(Product product) {
-//        iProductRepository.editProduct(product);
-//    }
-//
-//    @Override
-//    public List<Product> searchByName(String productName) {
-//        return iProductRepository.searchByName(productName);
-//    }
-//
-//    @Override
-//    public boolean checkExistence(int productId) {
-//        return iProductRepository.checkExistence(productId);
-//    }
 }

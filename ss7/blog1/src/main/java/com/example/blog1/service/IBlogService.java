@@ -13,4 +13,6 @@ public interface IBlogService {
 
     void deleteById(Integer id);
 
+    List<Blog> searchByTitle(String name);
+
 }

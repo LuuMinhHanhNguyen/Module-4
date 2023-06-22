@@ -13,11 +13,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/blogs")
 public class BlogController {
     @Autowired
-    private IBlogService iProductService;
+    private IBlogService iBlogService;
 
     @RequestMapping("")
     public String showAll(Model model) {
-        model.addAttribute("blogs", iProductService.findAll());
+        model.addAttribute("blogs", iBlogService.findAll());
 
         return "/home";
     }
@@ -31,15 +31,15 @@ public class BlogController {
     @PostMapping("/create")
     public String createNewBlog(@ModelAttribute Blog blog, Model model, RedirectAttributes redirectAttributes) {
         redirectAttributes.addAttribute("success", "New blog added!");
-        iProductService.save(blog);
+        iBlogService.save(blog);
 
         return "redirect:/blogs";
     }
 
     @GetMapping("/details/{id}")
     public String showProductDetails(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
-        if(iProductService.checkIDExistence(id)){
-            model.addAttribute("blog", iProductService.findById(id));
+        if(iBlogService.checkIDExistence(id)){
+            model.addAttribute("blog", iBlogService.findById(id));
             return "details";
         } else {
             redirectAttributes.addFlashAttribute("invalidIDMessage", "Invalid ID!");
@@ -47,21 +47,22 @@ public class BlogController {
         }
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteBlog(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
-        if(iProductService.checkIDExistence(id)){
-             iProductService.deleteById(id);
+    @PostMapping ("/delete")
+    public String deleteBlog(@RequestParam("id") Integer id, RedirectAttributes redirectAttributes) {
+        if(iBlogService.checkIDExistence(id)){
+             iBlogService.deleteById(id);
+            System.out.println("hihi" + id);
            redirectAttributes.addAttribute("successDelete", "Delete Successfully!");
         } else{
             redirectAttributes.addAttribute("errorDelete", "Invalid ID!");
         }
         return "redirect:/blogs";
     }
-//
+
     @GetMapping("/update/{id}")
     public String showEditForm(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
-        if(iProductService.checkIDExistence(id)){
-            model.addAttribute("blog", iProductService.findById(id));
+        if(iBlogService.checkIDExistence(id)){
+            model.addAttribute("blog", iBlogService.findById(id));
             return "edit";
         } else{
             redirectAttributes.addAttribute("errorUpdate", "Invalid ID!");
@@ -72,8 +73,15 @@ public class BlogController {
     @PostMapping("/update")
     public String updateProduct(@ModelAttribute Blog blog) {
         System.out.println(blog.getId());
-        iProductService.save(blog);
+        iBlogService.save(blog);
         return "redirect:/blogs";
+    }
+
+    @GetMapping("/search")
+    public String searchByName(@RequestParam("title") String title, Model model) {
+        System.out.println(iBlogService.searchByTitle(title));
+        model.addAttribute("blogs", iBlogService.searchByTitle(title));
+        return "/home";
     }
 
 }
