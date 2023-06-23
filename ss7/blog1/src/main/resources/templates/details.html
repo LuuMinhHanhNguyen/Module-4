@@ -27,15 +27,16 @@
                 <div class="col">
                     <div class="row justify-content-center">
                         <div class="card" style="width: 50rem">
-                            <a th:href="@{/blogs/details/id(id = ${blog.getId()})}">
+
                                 <img
                                         th:src="${blog.getImage()}"
                                         class="card-img-top text-center product-img"
                                         alt="merch"
                                 />
-                            </a>
                             <div class="card-body overflow-scroll" style="height: 80px;">
-                                <h3 class="link link-offset-2-hover text-black fs-5" th:text="${blog.getTitle()}"></h3>
+                                <h3 class="link link-offset-2-hover text-black fs-5" th:text="${blog.getTitle()}">
+                                </h3>
+                                <span th:text="${blog.category.name}"></span>
                             </div>
                             <p class="card-text fs-5" th:text="${blog.getDate()}"></p>
                             <div class="card-footer overflow-scroll" style="height: 150px;">

@@ -1,7 +1,8 @@
 package com.example.blog1.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Table(name = "blogs")
 @Entity
 public class Blog {
@@ -12,13 +13,45 @@ public class Blog {
     private String title;
 
     private String image;
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDate date;
-    @Column(columnDefinition = "VARCHAR(65535)")
+    @Column(name = "create_at",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime date;
+    @Column(columnDefinition = "TEXT")
     private String content;
+    @Column(name = "is_deleted")
+    private boolean flagDelete;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     public Blog(){
 
+    }
+
+    public Blog(Integer id, String title, String image, LocalDateTime date, String content, boolean flagDelete, Category category) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.date = date;
+        this.content = content;
+        this.flagDelete = flagDelete;
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public boolean getFlagDelete() {
+        return flagDelete;
+    }
+
+    public void setFlagDelete(boolean flagDelete) {
+        this.flagDelete = flagDelete;
     }
 
     public Integer getId() {
@@ -45,11 +78,11 @@ public class Blog {
         this.image = image;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
