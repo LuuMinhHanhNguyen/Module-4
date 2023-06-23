@@ -48,7 +48,7 @@ public class BlogController {
         model.addAttribute("blog", new Blog());
         model.addAttribute("categories", iCategoryService.findAllCategories());
         System.out.println(iCategoryService.findAllCategories());
-
+        //yoo
         return "/add";
     }
 
