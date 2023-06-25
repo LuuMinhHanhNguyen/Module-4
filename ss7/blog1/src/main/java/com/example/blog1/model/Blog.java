@@ -3,7 +3,7 @@ package com.example.blog1.model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Table(name = "blogs")
+@Table(name = "blogs", uniqueConstraints = {@UniqueConstraint(name = "content-unique", columnNames = "content")})
 @Entity
 public class Blog {
     @Id
@@ -13,9 +13,9 @@ public class Blog {
     private String title;
 
     private String image;
-    @Column(name = "create_at",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_date",columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime date;
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "content", columnDefinition = "TEXT")
     private String content;
     @Column(name = "is_deleted")
     private boolean flagDelete;

@@ -32,7 +32,7 @@
     </div>
 
     <div class="mb-3">
-        <select th:field="*{category}">
+        <select th:field="*{category}" class="form-select">
             <option th:each="category : ${categories}" th:text="${category.name}" th:value="${category.id}" >
             </option>
         </select>

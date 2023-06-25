@@ -14,7 +14,7 @@ public class Blog {
     private String image;
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate date;
-    @Column(columnDefinition = "VARCHAR(65535)")
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     private boolean isDeleted;
