@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:object="${userDTO}" th:action="@{/form}" method="post">
+    <label for="firstName">First Name</label>
+    <input id="firstName" type="text" th:field="*{firstName}">
+    <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color: red">Name Error</td>
+    <br><br>
+    <label for="lastName">Last Name</label>
+    <input id="lastName" type="text" th:field="*{lastName}">
+    <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color: red">Name Error</td>
+    <br><br>
+    <label for="phone">Phone Number</label>
+    <input id="phone" type="text" th:field="*{phoneNumber}">
+    <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" style="color: red">Name Error</td>
+    <br><br>
+    <label for="age">Age</label>
+    <input id="age" type="number" th:field="*{age}">
+    <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}" style="color: red">Name Error</td>
+    <br><br>
+    <label for="email">Email</label>
+    <input id="email" type="text" th:field="*{email}">
+    <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red">Name Error</td>
+    <br><br>
+    <button type="submit">Create</button><br><br>
+</form>
+</body>
+</html>

@@ -20,8 +20,6 @@ public class BlogService implements IBlogService {
         return iBlogRepository.findByFlagDeleteFalse(pageable);
     }
 
-
-
     @Override
     public void save(Blog newBlog) {
         newBlog.setFlagDelete(false);

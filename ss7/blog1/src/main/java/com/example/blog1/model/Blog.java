@@ -1,9 +1,11 @@
 package com.example.blog1.model;
 
+
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Table(name = "blogs", uniqueConstraints = {@UniqueConstraint(name = "content-unique", columnNames = "content")})
+@Table(name = "blogs")
 @Entity
 public class Blog {
     @Id
@@ -93,4 +95,5 @@ public class Blog {
     public void setContent(String content) {
         this.content = content;
     }
+
 }
