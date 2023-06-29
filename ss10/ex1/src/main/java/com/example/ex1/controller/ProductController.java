@@ -20,13 +20,18 @@ public class ProductController {
 
     @Autowired
     private IProductService iProductService;
+
     @RequestMapping
-    public String showAllProducts(Model model){
-        model.addAttribute("products",iProductService.findAll());
+    public String showAllProducts(Model model) {
+        model.addAttribute("products", iProductService.findAll());
         return "/home";
     }
+
     @GetMapping("/details/{id}")
-    public String showProductDetails(@PathVariable Integer id, Model model){
+    public String showProductDetails(@PathVariable Integer id, Model model) {
+        if (iProductService.findById(id) == null) {
+            model.addAttribute("msg", "Invalid ID!");
+        }
         model.addAttribute("product", iProductService.findById(id));
         return "/details";
     }
@@ -35,13 +40,14 @@ public class ProductController {
     public String addProductToCart(@PathVariable Integer id,
                                    @RequestParam Integer quantity,
                                    @SessionAttribute("cart") Cart cart,
-                                    Model model){
-        cart.addProduct(iProductService.findById(id), quantity);
-        System.out.println("quantity"+ cart.getProducts().get(iProductService.findById(id)));
+                                   Model model) {
+        if (iProductService.findById(id) == null) {
+            model.addAttribute("msg", "Invalid ID!");
+        }
 
+        cart.addProduct(iProductService.findById(id), quantity);
         model.addAttribute("cartList", cart.getProducts());
         model.addAttribute("cart", cart);
-
         return "/cart";
     }
 

@@ -11,16 +11,6 @@
 </head>
 <body>
 
-<!--<button-->
-<!--        type="button"-->
-<!--        class="btn btn-success w-auto mb-2"-->
-<!--        data-bs-toggle="modal"-->
-<!--        data-bs-target="#addNewProduct"-->
-<!--&gt;-->
-<!--  Add new product-->
-<!--</button>-->
-
-
 <section>
   <div class="container mt-2 text-center">
     <a href="/carts" class="btn btn-outline-info">GO TO CART</a>
@@ -53,53 +43,6 @@
     </div>
   </div>
 </section>
-
-<!-- Modal add new product -->
-<div class="modal fade" id="addNewProduct" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel3">Create new product!</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="/products?action=create" method="post">
-        <div class="modal-body">
-
-          <div class="mb-3">
-            <label for="name" class="col-form-label">New product name:</label>
-            <input name="name" type="text" class="form-control" id="name">
-          </div>
-          <div class="mb-3">
-            <label for="price" class="col-form-label">New product price:</label>
-            <input name="price" type="number" class="form-control" step="0.01" id="price">
-          </div>
-          <div class="mb-3">
-            <label for="description" class="col-form-label">New product description:</label>
-            <textarea name="description" class="form-control" id="description"></textarea>
-          </div>
-          <div class="mb-3">
-            <label for="image" class="col-form-label">New product image:</label>
-            <input name="image" type="text" class="form-control" id="image">
-          </div>
-          <div class="mb-3">
-            <label for="product-type" class="col-form-label"
-            >Product type:</label
-            >
-            <select name="type" class="form-select" id="product-type">
-              <option value="merch">Merch</option>
-              <option value="music">Music</option>
-            </select>
-          </div>
-
-        </div>
-        <div class="modal-footer">
-          <button name="no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button name="yes" type="submit" class="btn btn-success">Save changes</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

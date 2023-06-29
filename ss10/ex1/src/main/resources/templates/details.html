@@ -50,11 +50,6 @@
         </div>
 
         <form th:action="@{/products/{id}(id = ${product.id})}" method="get" th:object="${product}">
-<!--          <input type="hidden" name="productId" value="${product.getId()}">-->
-<!--          <input type="hidden" name="productName" value="${product.getName()}">-->
-<!--          <input type="hidden" name="productTypeId" value="${product.getProductTypeId()}">-->
-<!--          <input type="hidden" name="price" value="${product.getPrice()}">-->
-<!--          <input type="hidden" name="image" value="${product.getImage()}">-->
 
           <p class="my-2">Quantity</p>
           <div class="container border-black border-1 mb-4">

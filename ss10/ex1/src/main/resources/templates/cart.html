@@ -53,21 +53,26 @@
                       >
                       </a>
                     </div>
-                    <p class="card-text">€<span th:text="${cartItem.getKey().price}" class="price"></span> EUR</p>
+                    <p class="card-text">€<span th:text="${cartItem.getKey().price}" th:value="${cartItem.getKey().price}" class="price"></span> EUR</p>
                     <p class="card-text mt-2">
                     <div class="col-4 input-group border-black border-1">
-                      <button
-                              type="button" class="btn btn-outline-dark quantity-btn  quantity-minus">-</button>
-                      <input
-                              name="quantity"
-                              style="width: 70px"
-                              class="quantity form-control text-center flex-grow-0"
-                              th:placeholder="${cartItem.getValue()}"
 
+                    <a   th:href="@{/carts/update/minus/{id}(id = ${cartItem.getKey().id})}"
+                         th:if="${cartItem.getValue() > 1}"
+                         class="btn btn-outline-dark quantity-btn  quantity-minus">-</a>
+                    <a   th:href="@{/carts/update/minus/{id}(id = ${cartItem.getKey().id})}"
+                         th:if="${cartItem.getValue() <= 1}"
+                         class="btn btn-outline-dark quantity-btn  quantity-minus disabled">-</a>
+
+                      <input
+                              style="width: 70px"
+                              id="quantity"
+                              class="quantity form-control text-center flex-grow-0"
                               th:value="${cartItem.getValue()}"
                               readonly
                       />
-                      <button type="button" class="btn btn-outline-dark quantity-btn  quantity-plus">+</button>
+                      <a th:href="@{/carts/update/plus/{id}(id = ${cartItem.getKey().id})}"
+                              class="btn btn-outline-dark quantity-btn  quantity-plus">+</a>
                     </div>
                     <a class="btn btn-outline-danger my-2" th:href="@{/carts/delete/{id}(id = ${cartItem.getKey().id})}">Delete</a>
                   </div>
@@ -77,11 +82,8 @@
           </td>
 
           <td class="col col-4 text-end">
-
-            <h6 class="  itemPrice " th:text="${cartItem.getKey().price * cartItem.getValue()}">EUR</h6>
+            <h6 class=" itemPrice " th:text="${cartItem.getKey().price * cartItem.getValue()}">EUR</h6>
           </td>
-
-
         </tr>
       </div>
 
@@ -95,7 +97,7 @@
       <div
               class="row flex-row justify-content-center align-items-center justify-content-md-end">
         <p class="col-12 text-center text-md-end fs-5">
-          Subtotal € <span th:if="${cartList.size() > 0}" class="subtotal" th:text="${cart.countTotalPayment()}"><%= String.format("%.2f", subTotal)  %></span> EUR
+          Subtotal € <span th:if="${cartList.size() > 0}" class="subtotal" th:text="${cart.countTotalPayment()}">Subtotal</span> EUR
         </p>
         <p class="col-12 text-center text-md-end fw-light">
           Tax included and shipping calculated at checkout
@@ -113,81 +115,6 @@
 
   </div>
 </section>
-
-<script>
-  // for increasing quantity
-
-  document
-          .querySelector(".quantity-plus")
-          .addEventListener("click", function () {
-            document.querySelector(".quantity-minus").disabled = false;
-            let newQuantity = document.querySelector(".quantity").value;
-            let num = parseInt(newQuantity);
-            num += 1;
-            document.querySelector(".quantity").value = num;
-            document.querySelector(".quantity").textContent = num;
-
-            console.log(num);
-          });
-</script>
-
-<script>
-  // for decreasing quantity
-  document
-          .querySelector(".quantity-minus")
-          .addEventListener("click", function () {
-            let newQuantity = document.querySelector(".quantity").value;
-            let num = parseInt(newQuantity);
-            if (num === 1) {
-              document.querySelector(".quantity-minus").disabled = true;
-            } else {
-              num -= 1;
-              document.querySelector(".quantity").value = num;
-              document.querySelector(".quantity").textContent = num;
-              console.log(num);
-            }
-          });
-</script>
-<script>
-  let quantity = document.querySelector(".quantity").value;
-  console.log("quan" + quantity)
-  let costPerItem = document.querySelector(".price").textContent;
-  console.log("cost" + costPerItem)
-  let totalCost = quantity * costPerItem;
-  console.log("total"+ totalCost);
-  let totalElement = document.querySelector(".itemPrice");
-
-  // let quantityBtn = document.querySelector(".quantity-btn");
-  let quantityPlus = document.querySelector(".quantity-plus");
-  let quantityMinus = document.querySelector(".quantity-minus");
-
-
-  quantityPlus.addEventListener("click", function (){
-    quantity = document.querySelector(".quantity").value;
-    updateTotalCost(quantity);
-    updateDisplay();
-
-  });
-  quantityMinus.addEventListener("click", function (){
-    quantity = document.querySelector(".quantity").value;
-    updateTotalCost(quantity);
-    updateDisplay();
-
-  });
-
-  function updateTotalCost(quantity) {
-    // Recalculate the total cost based on the new quantity
-    totalCost = quantity * costPerItem;
-    console.log("update total " + totalCost)
-  }
-
-  function updateDisplay() {
-    // Update the displayed quantity and total cost
-    totalElement.textContent = totalCost.toFixed(2);
-  }
-
-</script>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
