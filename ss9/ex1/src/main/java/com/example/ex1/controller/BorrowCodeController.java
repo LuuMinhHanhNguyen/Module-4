@@ -49,10 +49,14 @@ public class BorrowCodeController {
 
     @PostMapping("/codes")
     public String cfReturnBorrowedBooks(@RequestParam Integer codes, RedirectAttributes redirectAttributes) throws Exception {
-        BorrowCode borrowCode = iBorrowCodeService.findByBorrowCodes(codes).get();
-        borrowCode.setReturnDate(LocalDateTime.now());
-        iBorrowCodeService.delete(borrowCode);
-        redirectAttributes.addFlashAttribute("message", "Successfully return your book! Thank u!");
+        if(iBorrowCodeService.checkCodesIfNotExistence(codes)){
+            redirectAttributes.addFlashAttribute("message", "Invalid borrowed codes! Please try again!");
+        } else {
+            BorrowCode borrowCode = iBorrowCodeService.findByBorrowCodes(codes).get();
+            borrowCode.setReturnDate(LocalDateTime.now());
+            iBorrowCodeService.delete(borrowCode);
+            redirectAttributes.addFlashAttribute("message", "Successfully return your book! Thank u!");
+        }
         return "redirect:/books";
     }
 }
