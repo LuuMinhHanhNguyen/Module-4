@@ -10,6 +10,8 @@ public class Product {
     private Integer id;
     private String name;
     private double price;
+
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
     private String image;
 
