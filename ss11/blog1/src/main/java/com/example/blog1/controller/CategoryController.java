@@ -42,7 +42,7 @@ public class CategoryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping()
+    @DeleteMapping("{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable Integer id) {
         if (iCategoryService.checkIDExistence(id)) {
             iCategoryService.deleteById(id);
@@ -55,11 +55,12 @@ public class CategoryController {
 
     @PutMapping()
     public ResponseEntity<?> updateCategory(@RequestBody Category category) {
-        if (iCategoryService.checkIDExistence(category.getId())) {
+        if (!iCategoryService.checkIDExistence(category.getId())) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        } else {
             iCategoryService.save(category);
             return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }
