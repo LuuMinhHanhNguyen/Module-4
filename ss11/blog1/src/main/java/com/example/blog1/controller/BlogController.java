@@ -16,7 +16,7 @@ public class BlogController {
     private IBlogService iBlogService;
 
 
-    @RequestMapping()
+    @GetMapping()
     public ResponseEntity<List<Blog>> showAll() {
         return new ResponseEntity<>(iBlogService.findAll(), HttpStatus.OK);
     }
@@ -27,7 +27,7 @@ public class BlogController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/details/{id}")
+    @RequestMapping("{id}")
     public ResponseEntity<?> showProductDetails(@PathVariable Integer id) {
         if (iBlogService.checkIDExistence(id)) {
             return new ResponseEntity<>(iBlogService.findById(id), HttpStatus.OK);
@@ -56,7 +56,7 @@ public class BlogController {
         }
     }
 
-    @GetMapping("/search/{title}")
+    @RequestMapping ("/search/{title}")
     public ResponseEntity<List<Blog>> searchByName(@PathVariable String title) {
         return new ResponseEntity<>(iBlogService.searchByTitle(title), HttpStatus.OK);
     }
