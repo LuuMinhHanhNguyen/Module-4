@@ -16,7 +16,7 @@ public interface IBlogRepository extends JpaRepository<Blog, Integer> {
 
     List<Blog> findBlogsByCategory_IdAndFlagDeleteFalse(Integer categoryId);
 
-    @Query(nativeQuery = true, value = "select * from blogs limit :limit")
+    @Query(nativeQuery = true, value = "select * from blogs where is_deleted = false limit :limit")
     List<Blog> getBlogsByPageNum(@Param("limit") int limit);
 }
 

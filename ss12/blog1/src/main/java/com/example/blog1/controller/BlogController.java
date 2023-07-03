@@ -39,7 +39,7 @@ public class BlogController {
         return new ResponseEntity<>( HttpStatus.CREATED);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> showProductDetails(@PathVariable Integer id) {
         if (iBlogService.checkIDExistence(id)) {
             return new ResponseEntity<>(iBlogService.findById(id), HttpStatus.OK);

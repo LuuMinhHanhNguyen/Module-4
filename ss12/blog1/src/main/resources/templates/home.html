@@ -17,6 +17,9 @@
         <div class="col-6">
             <a class="btn btn-success" onclick="showAll()">SHOW ALL BLOGS</a>
             <a class="btn btn-success" id="loadMore" onclick="loadMoreBlogs()">LOAD MORE</a>
+            <a role="button" class="btn btn-outline-info"
+               data-bs-toggle="modal" data-bs-target="#addModal">
+                Add New Blog</a>
 
         </div>
         <div class="col-6">
@@ -25,20 +28,6 @@
                    placeholder="Enter blog's title here to search:" id="search-input">
             <button type="button" onclick="search()" class="btn btn-success submit-search">Search</button>
 
-        </div>
-
-        <div class="col-6">
-            <!--            create-->
-            <input class="form-control w-50 d-inline" type="text"
-                   placeholder="Enter blog's title here to add new:" id="title">
-            <input class="form-control w-50 d-inline" type="text"
-                   placeholder="Enter blog's image here to add new:" id="image">
-            <input class="form-control w-50 d-inline" type="text"
-                   placeholder="Enter blog's content here to add new:" id="content">
-            <select id="category">
-
-            </select>
-            <button type="button" onclick="addNewBlog()" class="btn btn-success submit-search">Create</button>
         </div>
     </div>
 
@@ -52,19 +41,78 @@
 <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel1">Are you sure to delete this blog:
-                    <span class="deleteName text-danger"></span><span> ?</span>
+                <h1 class="modal-title fs-5" id="exampleModalLabel1">Update Blog
                 </h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="col-6">
+                    <!--            update-->
+                    <input class="form-control d-inline" type="text"
+                           placeholder="Enter blog's title here to add new:" id="updateTitle">
+                    <input class="form-control  d-inline" type="text"
+                           placeholder="Enter blog's image here to add new:" id="updateImage">
+                    <input class="form-control d-inline" type="text"
+                           placeholder="Enter blog's content here to add new:" id="updateContent">
+                    <select id="updateCategory"></select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input type="hidden" id="updateId" value="">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="update()" class="btn btn-success submit-search">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal add blog-->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId2" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel2">Create New Blog
+                </h1>
+            </div>
+
+            <div class="modal-body">
+                <div class="col-6">
+                    <!--            update-->
+                    <input class="form-control d-inline" type="text"
+                           placeholder="Enter blog's title here to add new:" id="addTitle">
+                    <input class="form-control d-inline" type="text"
+                           placeholder="Enter blog's image here to add new:" id="addImage">
+                    <input class="form-control d-inline" type="text"
+                           placeholder="Enter blog's content here to add new:" id="addContent">
+                    <select id="addCategory"></select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input type="hidden" id="addId" value="">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="add()" class="btn btn-success submit-search">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal delete blog-->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId3" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" >Are you sure to delete this blog
+                    <span class="deleteId text-danger"></span> ?</h2>
             </div>
             <div class="modal-footer">
-                <form th:action="@{/blogs/delete}" method="post">
-                    <input type="hidden" name="id" id="deleteId">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-outline-danger">DELETE</button>
-                </form>
+                <input type="hidden" class="deleteId" value="">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="cfDelete()" class="btn btn-success submit-search">Delete</button>
             </div>
         </div>
     </div>
@@ -78,8 +126,7 @@
 
     let pageNum = 1;
 
-    function findBlogById(blogId){
-        let foundBlog;
+    function findBlogById(blogId) {
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -87,18 +134,84 @@
             },
             type: "GET",
             url: "http://localhost:8080/blogs/" + blogId,
-            success: function (blog) {
-                foundBlog = blog
+            success: function (updatedBlog) {
+
+                $("#updateId").val(updatedBlog.id);
+                $("#updateTitle").val(updatedBlog.title);
+                $("#updateImage").val(updatedBlog.image);
+                $("#updateContent").val(updatedBlog.content);
+                // $("#updateCategory").text("updatedBlog.category.name");
+                $("#updateModal").modal('show');
+
             }
         });
-        return foundBlog;
-    }
-
-    function updateBlog(){
 
     }
-    function popUpModal(id){
-        $("#updateModal").modal('show');
+
+    function add(){
+
+        let newTitle = $("#addTitle").val();
+        let newImage = $("#addImage").val();
+        let newContent = $("#addContent").val();
+        let newCategory = $("#addCategory").val();
+
+        let blog = {
+            title: newTitle,
+            image: newImage,
+            category: {
+                id: +newCategory
+            },
+            content: newContent,
+
+        };
+
+        $.ajax({
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            url: "http://localhost:8080/blogs",
+            type: "POST",
+            data: JSON.stringify(blog),
+            success: function () {
+                $("#addModal").modal('hide');
+                showAll();
+            }
+        });
+
+    }
+
+    function update() {
+
+        let id = $("#updateId").val();
+        let newTitle = $("#updateTitle").val();
+        let newImage = $("#updateImage").val();
+        let newContent = $("#updateContent").val();
+        let newCategory = $("#updateCategory").val();
+
+        let blog = {
+            id: id,
+            title: newTitle,
+            image: newImage,
+            content: newContent,
+            category: {
+                id: +newCategory
+            }
+        }
+
+        $.ajax({
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            url: "http://localhost:8080/blogs",
+            type: "PUT",
+            data: JSON.stringify(blog),
+            success: function () {
+                $("#updateModal").modal('hide');
+                showAll();
+
+            }
+        });
+
     }
 
     function loadMoreBlogs() {
@@ -169,7 +282,7 @@
         });
     }
 
-    function getCategories(){
+    function getCategories() {
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -186,40 +299,13 @@
                 }
                 console.log(content)
                 $("#category").html(content);
+                $("#updateCategory").html(content);
+                $("#addCategory").html(content);
             }
         });
 
     }
 
-    function addNewBlog() {
-        let title = $("#title").val();
-        let image = $("#image").val();
-        let category = $("#category").val();
-        let content = $("#content").val();
-
-        let blog = {
-            title: title,
-            image: image,
-            category: {
-                id: +category
-            },
-            content: content,
-
-        };
-        console.log(blog);
-
-        $.ajax({
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            url: "http://localhost:8080/blogs",
-            type: "POST",
-            data: JSON.stringify(blog),
-            success: function () {
-                showAll();
-            }
-        });
-    }
 
     function getBlog(blog) {
         return `
@@ -242,8 +328,10 @@
                             <div class="card-footer overflow-scroll" style="height: 150px;">
                                 <p class="card-text fs-5">${blog.content}</p>
                             </div>
-                            <button type="button" onclick="deleteBlog(${blog.id})"  class="btn btn-danger w-25">Delete </button>
-                             <button type="button" onclick="popUpModal(${blog.id})"  class="btn btn-info w-25">Update </button>
+                            <button type="button" onclick="findBlogById(${blog.id})" class="btn btn-info w-25">Update </button>
+                             <button type="button" onclick="deleteBlog(${blog.id})"
+                             class="btn btn-danger w-25" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                             >Delete</button>
                         </div>
                     </div>
                 </div>
@@ -251,7 +339,13 @@
             ;
     }
 
-    function deleteBlog(id){
+    function deleteBlog(id) {
+        $(".deleteId").text(id);
+        $(".deleteId").val(id);
+    }
+
+    function cfDelete(){
+        let id = $(".deleteId").val();
         $.ajax({
             headers: {
                 'Content-Type': 'application/json'
@@ -259,17 +353,17 @@
             url: "http://localhost:8080/blogs/" + id,
             type: "DELETE",
             success: function () {
+                $("#deleteModal").modal("hide");
                 showAll();
             }
         });
     }
 
-    function getCategory(category){
+    function getCategory(category) {
         return `
                 <option value="${category.id}">${category.name}</option>
         `;
     }
-
 
 
 </script>
